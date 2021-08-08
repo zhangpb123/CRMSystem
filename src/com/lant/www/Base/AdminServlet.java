@@ -1,10 +1,10 @@
-package com.lant.www.web;
+package com.lant.www.Base;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 //处理和我们的管理员相关的内容
-@WebServlet("/admin.lt")
+//@WebServlet("/admin.lt")
 public class AdminServlet extends BaseServlet{
 
     public String login(HttpServletRequest request){

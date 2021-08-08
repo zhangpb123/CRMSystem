@@ -3,4 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    
+    <servlet>
+        <servlet-name>dispatch</servlet-name>
+        <servlet-class>com.lant.www.dispatch.DispatchServlet</servlet-class>
+        <init-param>
+            <!--配置在DispatchServlet类中可以获取的参数-->
+            <param-name>packPath</param-name>
+            <param-value>com.lant.www.web</param-value>
+        </init-param>
+        <!--服务器一开启就加载-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>dispatch</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

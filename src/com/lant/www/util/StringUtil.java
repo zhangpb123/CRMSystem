@@ -1,4 +1,4 @@
-package com.lant.www.system;
+package com.lant.www.util;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;

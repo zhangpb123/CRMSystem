@@ -1,4 +1,4 @@
-package com.lant.www.web;
+package com.lant.www.Base;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
