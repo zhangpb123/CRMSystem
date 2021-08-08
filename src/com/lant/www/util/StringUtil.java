@@ -52,4 +52,9 @@ public class StringUtil {
         return s;
 
     }
+
+    //判断字符串是否为空
+    public static boolean isNull(String str){
+         return str == null || "".equals(str) || "".equals(str.trim());
+    }
 }

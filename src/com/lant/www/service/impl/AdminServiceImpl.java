@@ -18,4 +18,11 @@ public class AdminServiceImpl implements AdminService {
         adminInfo.setAcount(acount);
         return adminDao.queryAdmin(adminInfo);
     }
+
+    @Override
+    public boolean insertAdmin(AdminInfo adminInfo) {
+        return adminDao.insertAdmin(adminInfo);
+    }
+
+
 }

@@ -9,5 +9,11 @@ public interface AdminService {
      */
     public AdminInfo login(String acount);
 
+    /**
+     * 插入用户信息
+     * @param adminInfo
+     * @return
+     */
+    public boolean insertAdmin(AdminInfo adminInfo) ;
 
 }

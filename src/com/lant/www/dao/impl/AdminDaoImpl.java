@@ -14,5 +14,15 @@ public class AdminDaoImpl implements AdminDao {
         return DBUtil.executeDQLGetOne(sql,AdminInfo.class,adminInfo.getAcount());
     }
 
+    /**
+     * 插入用户信息
+     * @param adminInfo
+     * @return
+     */
+    public boolean insertAdmin(AdminInfo adminInfo) {
+        String sql = "INSERT INTO admin(acount,pass,phone,age) VALUES(?,?,?,?)";
 
+        //很多同学在这个地方,字段的顺序会弄错;或者说多一个少一个;导致问题
+        return DBUtil.executeDML(sql,adminInfo.getAcount(),adminInfo.getPass(),adminInfo.getPhone(),adminInfo.getAge());
+    }
 }

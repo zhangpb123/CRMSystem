@@ -74,13 +74,51 @@ public class AdminWeb {
         return "login.jsp";
     }
 
-    @GetParam(value = "/regist.do")
-    public String regist(HttpServletRequest request){
-        return "regist.jsp";
+    @GetParam("/addAdmin.do")
+    public String jumpAdd(HttpServletRequest req){
+        return "/WEB-INF/adminAdd.jsp";
     }
 
-    @GetParam(value = "/adminlist.do",type = "ajax")
-    public String adminlist(HttpServletRequest request){
-        return "adminlist";
+    @GetParam(value = "/addAd.do")
+    public String adminAdd(HttpServletRequest req){
+        String username = req.getParameter("username");
+        String phone = req.getParameter("phone");
+        String age = req.getParameter("age");
+        String pass = req.getParameter("pass");
+        String repass = req.getParameter("repass");
+
+        //1.1 非空校验
+        if(StringUtil.isNull(username)){
+            req.setAttribute("errorMsg","用户名为空");
+            return "WEB-INF/adminAdd.jsp";
+        }
+
+        if(StringUtil.isNull(phone)){
+            req.setAttribute("errorMsg","手机为空");
+            return "WEB-INF/adminAdd.jsp";
+        }
+
+        if(StringUtil.isNull(pass) || StringUtil.isNull(repass)){
+            req.setAttribute("errorMsg","密码为空");
+            return "WEB-INF/adminAdd.jsp";
+        }
+
+        if(!pass.equals(repass)){
+            req.setAttribute("errorMsg","两次密码不一致");
+            return "WEB-INF/adminAdd.jsp";
+        }
+
+        //密码加密
+        String md5Pass = StringUtil.md5Str(pass);
+
+        AdminInfo adminInfo = new AdminInfo(username,md5Pass,phone,Integer.valueOf(age));
+
+        boolean b = adminService.insertAdmin(adminInfo);
+
+        if (b){
+            return "index.jsp";
+        }else {
+            return "WEB-INF/adminAdd.jsp";
+        }
     }
 }
