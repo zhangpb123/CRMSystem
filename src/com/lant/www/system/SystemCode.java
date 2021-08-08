@@ -14,6 +14,7 @@ public interface SystemCode {
     String USER_LOGIN_NULL_PASS_STR = "密码为空";
     String USER_LOGIN_NULL_CODE_STR = "验证码为空";
     String USER_LOGIN_ERROR_CODE_STR = "验证码错误";
+    String USER_LOGIN_ERROR_PASS_STR = "密码错误";
     String USER_REGIST_SUCCESS = "注册成功";
 
     String SYSTEM_ERROR = "系统异常";
