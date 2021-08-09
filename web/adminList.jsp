@@ -33,15 +33,15 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5">
+                    <form class="layui-form layui-col-space5" action="queryAdminByWhere.do" method="post">
                         <div class="layui-inline layui-show-xs-block">
-                            <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
+                            <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start" value="${start}">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
+                            <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end" value="${end}" }>
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input" value="${username}">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
                             <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -163,12 +163,14 @@
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#start' //指定元素
+            elem: '#start' ,//指定元素
+            type: 'datetime'
         });
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#end' //指定元素
+            elem: '#end' ,//指定元素
+            type:'datetime'
         });
     });
 

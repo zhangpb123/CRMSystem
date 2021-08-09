@@ -219,4 +219,30 @@ public class AdminWeb {
             return "0000";
         }
     }
+
+    @GetParam(value = "/queryAdminByWhere.do")
+    public String queryAdminByWhere(HttpServletRequest request){
+
+        //从前端获取开始和结束时间和用户名
+        String start = request.getParameter("start");
+        String end = request.getParameter("end");
+        String username = request.getParameter("username");
+
+        //创建查询对象
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setStart(start);
+        adminInfo.setEnd(end);
+        adminInfo.setAcount(username);
+
+        //设置session返回前端
+        request.getSession().setAttribute("username",username);
+        request.getSession().setAttribute("start",start);
+        request.getSession().setAttribute("end",end);
+
+        List<AdminInfo> list = adminService.queryAdminListByInfo(adminInfo);
+
+        request.getSession().setAttribute("adminInfos",list);
+
+        return "adminList.jsp";
+    }
 }

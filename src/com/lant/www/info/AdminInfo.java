@@ -18,9 +18,9 @@ public class AdminInfo {
 //    //角色信息展示;一个用户有多个角色
 //    private List<RoleInfo> roles;
 //
-//    //条件查询使用的
-//    private String start;
-//    private String end;
+    //条件查询使用的
+    private String start;
+    private String end;
 //
 //    //这个属性就是用来分页的
 //    private PageInfo pg;
@@ -49,21 +49,21 @@ public class AdminInfo {
 //        this.pg = pg;
 //    }
 //
-//    public String getStart() {
-//        return start;
-//    }
-//
-//    public void setStart(String start) {
-//        this.start = start;
-//    }
-//
-//    public String getEnd() {
-//        return end;
-//    }
-//
-//    public void setEnd(String end) {
-//        this.end = end;
-//    }
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
 
     public int getId() {
         return id;

@@ -59,6 +59,16 @@ public class AdminDaoImpl implements AdminDao {
         if(adminInfo.getAge() != 0){
             sql += " and age = " + adminInfo.getAge();
         }
+        if (!StringUtil.isNull(adminInfo.getAcount())){
+            sql += " and acount LIKE '%" + adminInfo.getAcount() + "%'";
+        }
+        if (!StringUtil.isNull(adminInfo.getStart())){
+            sql += " and createtime > '" + adminInfo.getStart() +"'";
+        }
+        if (!StringUtil.isNull(adminInfo.getEnd())){
+            sql += " and createtime < '" + adminInfo.getEnd() +"'";
+        }
+
 
 
         return DBUtil.executeDQL(sql,AdminInfo.class);
