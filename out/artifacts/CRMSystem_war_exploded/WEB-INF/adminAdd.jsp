@@ -43,7 +43,7 @@
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
-                    <span class="x-red">*</span>将会成为您唯一的登入名
+                    <span class="x-red">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -123,21 +123,28 @@
         form.on('submit(add)',
             function(data) {
 
-            form.submit();
+                console.log(data);
+                //发异步，把数据提交给php
+                layer.alert("增加成功", {
+                        icon: 6
+                    },
+                    function() {
+                        //发送一个ajax 请求到后台
+                        $.ajax({
+                            url:"addAd.do",
+                            type:"post",
+                            data:data.field,
+                            success:function () {
+                                //关闭当前frame
+                                xadmin.close();
 
-                // console.log(data);
-                // //发异步，把数据提交给php
-                // layer.alert("增加成功", {
-                //         icon: 6
-                //     },
-                //     function() {
-                //         //关闭当前frame
-                //         xadmin.close();
-                //
-                //         // 可以对父窗口进行刷新
-                //         xadmin.father_reload();
-                //     });
-                // return false;
+                                // 可以对父窗口进行刷新
+                                xadmin.father_reload();
+                            }
+                        })
+
+                    });
+                return false;
             });
 
     });</script>

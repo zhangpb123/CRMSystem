@@ -5,6 +5,8 @@ import com.lant.www.dao.impl.AdminDaoImpl;
 import com.lant.www.info.AdminInfo;
 import com.lant.www.service.AdminService;
 
+import java.util.List;
+
 public class AdminServiceImpl implements AdminService {
 
     AdminDao adminDao = new AdminDaoImpl();
@@ -22,6 +24,26 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public boolean insertAdmin(AdminInfo adminInfo) {
         return adminDao.insertAdmin(adminInfo);
+    }
+
+    @Override
+    public List<AdminInfo> queryAllAdmin() {
+        return adminDao.queryAllAdmin();
+    }
+
+    @Override
+    public List<AdminInfo> queryAdminListByInfo(AdminInfo adminInfo) {
+        return adminDao.queryAdminListByInfo(adminInfo);
+    }
+
+    @Override
+    public boolean updateAdmin(AdminInfo adminInfo) {
+        return adminDao.updateAdmin(adminInfo);
+    }
+
+    @Override
+    public boolean deleteAdmin(String id) {
+        return adminDao.deleteAdminById(id);
     }
 
 

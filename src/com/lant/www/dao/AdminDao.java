@@ -2,6 +2,8 @@ package com.lant.www.dao;
 
 import com.lant.www.info.AdminInfo;
 
+import java.util.List;
+
 public interface AdminDao {
 
     /**
@@ -15,4 +17,25 @@ public interface AdminDao {
      * @return
      */
     public boolean insertAdmin(AdminInfo adminInfo) ;
+
+    /**
+     * 查询全部用户
+     */
+    public List<AdminInfo> queryAllAdmin();
+
+    /**
+     * 根据不同的条件去查询不同的信息
+     * @param adminInfo
+     * @return
+     */
+    public List<AdminInfo> queryAdminListByInfo(AdminInfo adminInfo);
+
+    /**
+     * 保存修改的信息
+     * @param adminInfo
+     * @return
+     */
+    public boolean updateAdmin(AdminInfo adminInfo);
+
+    boolean deleteAdminById(String id);
 }

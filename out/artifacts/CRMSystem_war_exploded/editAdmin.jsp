@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.2</title>
+    <title>修改Admin信息</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -21,14 +21,16 @@
 <body>
 <div class="layui-fluid">
     <div class="layui-row">
-        <form action="addAd.do" class="layui-form" method="post">
+        <form  class="layui-form">
+            <input type="hidden" name="id" value="${adminInfo.id}">
+
             <div class="layui-form-item">
                 <label for="username" class="layui-form-label">
                     <span class="x-red">*</span>登录名
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="username" name="username" required="" lay-verify="required"
-                           autocomplete="off" class="layui-input">
+                    <input type="text" id="username" name="username" required="" lay-verify="required" value="${adminInfo.acount}"
+                           autocomplete="off" class="layui-input" disabled>
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     <span class="x-red">*</span>将会成为您唯一的登入名
@@ -39,7 +41,7 @@
                     <span class="x-red">*</span>手机
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="phone" name="phone" required="" lay-verify="phone"
+                    <input type="text" id="phone" name="phone" required="" lay-verify="phone" value="${adminInfo.phone}"
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
@@ -51,7 +53,7 @@
                     <span class="x-red">*</span>年龄
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_email" name="age" required=""
+                    <input type="text" id="L_email" name="age" required="" value="${adminInfo.age}"
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
@@ -71,7 +73,7 @@
                     <span class="x-red">*</span>密码
                 </label>
                 <div class="layui-input-inline">
-                    <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                    <input type="password" id="L_pass" name="pass" required="" lay-verify="pass" value="*******"
                            autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
@@ -92,7 +94,7 @@
                 <label for="L_repass" class="layui-form-label">
                 </label>
                 <button  class="layui-btn" lay-filter="add" lay-submit="">
-                    增加
+                    修改
                 </button>
             </div>
         </form>
@@ -122,22 +124,21 @@
         //监听提交
         form.on('submit(add)',
             function(data) {
-
                 console.log(data);
                 //发异步，把数据提交给php
-                layer.alert("增加成功", {
+                layer.alert("编辑成功", {
                         icon: 6
                     },
                     function() {
-                        //发送一个ajax 请求到后台
+
                         $.ajax({
-                            url:"addAd.do",
+                            url:"editAd.do",
                             type:"post",
                             data:data.field,
-                            success:function () {
+                            success:function(data){
+                                console.info(data);
                                 //关闭当前frame
                                 xadmin.close();
-
                                 // 可以对父窗口进行刷新
                                 xadmin.father_reload();
                             }
@@ -146,7 +147,6 @@
                     });
                 return false;
             });
-
     });</script>
 
 </body>

@@ -190,7 +190,7 @@
           <i class="iconfont nav_right">&#xe697;</i></a>
         <ul class="sub-menu">
           <li>
-            <a onclick="xadmin.add_tab('管理员列表','admin-list.html')">
+            <a onclick="xadmin.add_tab('管理员列表','adminlist.do')">
               <i class="iconfont">&#xe6a7;</i>
               <cite>管理员列表</cite></a>
           </li>
@@ -341,7 +341,7 @@
     </div>
     <div class="layui-tab-content">
       <div class="layui-tab-item layui-show">
-        <iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+        <iframe src='./welcome.jsp' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
       </div>
     </div>
     <div id="tab_show"></div>
