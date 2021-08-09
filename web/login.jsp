@@ -30,7 +30,7 @@
         <hr class="hr15">
         <input name="userCode" type="text">
         <hr class="hr15">
-        <img src="code" />
+        <img src="code" onclick="this.src='code?param='+Math.random()"/>
         <hr class="hr15">
         <h3 style="color: red">${errorMsg}</h3>
         <hr class="hr15">
