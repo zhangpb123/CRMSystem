@@ -205,4 +205,18 @@ public class AdminWeb {
 
         return "0000";
     }
+
+    @GetParam(value = "/delAdminByIds.do",type = "ajax")
+    public String delAdminByIds(HttpServletRequest request){
+        //获取前端传来的ids
+        String ids = request.getParameter("ids");
+        String[] idArray = ids.split(",");
+
+        boolean b = adminService.delAdminByIds(idArray);
+        if (b){
+            return "1111";
+        }else {
+            return "0000";
+        }
+    }
 }

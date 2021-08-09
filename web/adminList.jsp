@@ -49,6 +49,7 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
+                    <input id="ids" name="ids" type="hidden" lay-filter="ids">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
                     <button class="layui-btn" onclick="xadmin.open('添加用户','./addAdmin.do',600,400)"><i class="layui-icon"></i>添加</button>
                 </div>
@@ -57,7 +58,7 @@
                         <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" name=""  lay-skin="primary">
+                                <input id="allCheck" type="checkbox" name="" lay-filter="allCheck" lay-skin="primary">
                             </th>
                             <th>ID</th>
                             <th>登录名</th>
@@ -73,7 +74,7 @@
                         <c:forEach items="${adminInfos}" var="admin">
                             <tr>
                                 <td>
-                                    <input type="checkbox" name=""  lay-skin="primary">
+                                    <input id="ch_${admin.id}"  type="checkbox" lay-filter="oneCheck" name="chname"  lay-skin="primary" value="${admin.id}">
                                 </td>
                                 <td>${admin.id}</td>
                                 <td>${admin.acount}</td>
@@ -122,6 +123,43 @@
     layui.use(['laydate','form'], function(){
         var laydate = layui.laydate;
         var form = layui.form;
+
+        //给复选框绑定修改的事件
+        form.on('checkbox(allCheck)',function (data) {
+            //遍历所有的子的复选框;勾选
+            var child = $("input[name='chname']");
+
+            var ids = '';
+            //遍历每个子复选框,全选
+            child.each(function(index,item){
+                item.checked = data.elem.checked;
+
+                if(data.elem.checked){
+                    ids += $(item).val() + ',';
+                }
+            })
+
+            $("#ids").val(ids);//需要删除的id传递到后台去
+
+            form.render('checkbox');//刷新一下它的样式
+        })
+
+        //给每一个子选项的复选框绑定事件
+        form.on('checkbox(oneCheck)',function (data) {
+            //如何判断我们的全选框应该是选中还是不选中
+            var child1 = $("input[name='chname']").length;
+            //选中的复选框有几个
+            var child2 = $("input[name='chname']:checked").length;
+
+            var ids = '';
+            $("input[name='chname']:checked").each(function(){
+                ids += $(this).val() + ",";
+            })
+            $("#ids").val(ids);//需要删除的id传递到后台去
+
+            $("#allCheck").prop("checked",child1 == child2);//如果子选项的个数和选中的个数一样;需要全选
+            form.render('checkbox');//刷新一下他的样式
+        })
 
         //执行一个laydate实例
         laydate.render({
@@ -184,13 +222,27 @@
 
     function delAll (argument) {
 
-        var data = tableCheck.getData();
+        if ($("input[name='chname']:checked").length <= 0){
+            layer.alert("你没有选择需要删除的内容");
+        }else{
+            layer.confirm('确认要删除这些记录吗？',function(index){
+                $.ajax({
+                    url:"delAdminByIds.do",
+                    type: "post",
+                    data:{"ids":$("#ids").val()},
+                    success:function (result) {
+                        if (result === "1111"){
+                            //捉到所有被选中的，发异步进行删除
+                            layer.msg('删除成功', {icon: 1});
+                            $(".layui-form-checked").not('.header').parents('tr').remove();
+                        }
+                    }
+                })
 
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
+            });
+        }
+
+
     }
 </script>
 

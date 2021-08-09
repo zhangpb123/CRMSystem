@@ -38,4 +38,11 @@ public interface AdminService {
     boolean updateAdmin(AdminInfo adminInfo);
 
     boolean deleteAdmin(String id);
+
+    /**
+     * 批量删除，虚拟删除
+     * @param idArray
+     * @return
+     */
+    boolean delAdminByIds(String[] idArray);
 }

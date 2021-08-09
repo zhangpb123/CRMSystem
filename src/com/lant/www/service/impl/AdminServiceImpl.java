@@ -46,5 +46,10 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.deleteAdminById(id);
     }
 
+    @Override
+    public boolean delAdminByIds(String[] idArray) {
+        return adminDao.delAdminByIds(idArray);
+    }
+
 
 }

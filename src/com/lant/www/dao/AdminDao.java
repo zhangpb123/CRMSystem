@@ -38,4 +38,11 @@ public interface AdminDao {
     public boolean updateAdmin(AdminInfo adminInfo);
 
     boolean deleteAdminById(String id);
+
+    /**
+     * 批量删除
+     * @param idArray
+     * @return
+     */
+    boolean delAdminByIds(String[] idArray);
 }

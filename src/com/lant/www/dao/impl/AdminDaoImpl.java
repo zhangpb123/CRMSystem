@@ -85,4 +85,24 @@ public class AdminDaoImpl implements AdminDao {
         String sql = "DELETE FROM admin WHERE id = ?";
         return DBUtil.executeDML(sql, id);
     }
+
+    @Override
+    public boolean delAdminByIds(String[] idArray) {
+        String sql = "UPDATE admin SET astatus=3 WHERE id in ";
+
+        String d = "(" ;
+
+        for (int i = 0; i < idArray.length; i++) {
+            d += "?";
+            if (i != idArray.length-1){
+                d += ",";
+            }
+        }
+
+        d += ")";
+
+        sql += d;
+
+        return DBUtil.executeDML(sql,idArray);
+    }
 }
