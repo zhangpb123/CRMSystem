@@ -14,4 +14,10 @@ public interface RoleDao {
     boolean bindRoles(int id, int role);
 
     List<RoleInfo> queryRoleNameByAdminId(int id);
+
+    boolean addRole(String roleName);
+
+    int queryRoleByName(String roleName);
+
+    void bindAuth(int roleid, String authid);
 }

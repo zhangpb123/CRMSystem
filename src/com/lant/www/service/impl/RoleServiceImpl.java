@@ -18,4 +18,30 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleInfo> queryAllRole() {
         return roleDao.queryAllRole();
     }
+
+    /**
+     * 添加角色并且获取它的id
+     * @param roleName
+     * @return
+     */
+    @Override
+    public int addRole(String roleName) {
+
+        //1.添加角色
+        boolean bl = roleDao.addRole(roleName);
+
+        //2.查询这个角色的id
+        int id = roleDao.queryRoleByName(roleName);
+
+        return 0;
+    }
+
+    @Override
+    public void addRoleAuth(int roleid, String ids) {
+        String[] authids = ids.split(",");
+
+        for (String authid:  authids) {
+            roleDao.bindAuth(roleid,authid);
+        }
+    }
 }
