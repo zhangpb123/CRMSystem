@@ -5,6 +5,7 @@ import com.lant.www.info.AdminInfo;
 import com.lant.www.util.DBUtil;
 import com.lant.www.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDaoImpl implements AdminDao {
@@ -114,5 +115,84 @@ public class AdminDaoImpl implements AdminDao {
         sql += d;
 
         return DBUtil.executeDML(sql,idArray);
+    }
+
+    /**
+     * 获取admin表中的记录数
+     * @return
+     */
+    @Override
+    public int queryAdminCount() {
+        String sql = "select count(id) from admin";
+        return DBUtil.executeDQLGetCount(sql);
+    }
+
+    /**
+     * 获取admin表中相关条件的记录数
+     * @return
+     */
+    @Override
+    public int queryAdminCountWithOther(AdminInfo adminInfo) {
+        String sql = "select count(id) from admin where 1=1";
+
+        if (!StringUtil.isNull(adminInfo.getAcount())){
+            sql += " and acount LIKE '%" + adminInfo.getAcount() + "%'";
+        }
+        if (!StringUtil.isNull(adminInfo.getStart())){
+            sql += " and createtime > '" + adminInfo.getStart() +"'";
+        }
+        if (!StringUtil.isNull(adminInfo.getEnd())){
+            sql += " and createtime < '" + adminInfo.getEnd() +"'";
+        }
+        return DBUtil.executeDQLGetCount(sql);
+    }
+
+    /**
+     * 利用分页方式去查询所有admin
+     * @param adminInfo
+     * @return
+     */
+    @Override
+    public List<AdminInfo> queryAdmins(AdminInfo adminInfo) {
+        String sql = "SELECT id,acount,pass,phone,age,createtime,updatetime,astatus,adesc FROM admin where 1=1";
+
+        //拓展: 我们如何才能够动态的把参数赋值给我们的通用方法;
+        //提示: 使用数组的方式
+        List<Object> params = new ArrayList<>();
+        if(adminInfo.getId() != 0){ //说明我们这个id是有值;就代表我需要根据id去搜索
+            sql += " and id = ?";
+            params.add(adminInfo.getId());
+        }
+        if(!StringUtil.isNull(adminInfo.getPhone())){
+            sql += " and phone = ?";
+            params.add(adminInfo.getPhone());
+        }
+        if(adminInfo.getAge() != 0){
+            sql += " and age = ?";
+            params.add(adminInfo.getAge());
+        }
+
+        if(!StringUtil.isNull(adminInfo.getStart())){
+            sql += " and createtime > ?";
+            params.add(adminInfo.getStart());
+        }
+
+        if(!StringUtil.isNull(adminInfo.getEnd())){
+            sql += " and createtime < ?";
+            params.add(adminInfo.getEnd());
+        }
+
+        if(!StringUtil.isNull(adminInfo.getAcount())){
+            sql += " and acount like ?";
+            params.add("%"+adminInfo.getAcount()+"%");
+        }
+
+        //拼接分页的部分
+
+        sql += " limit ?,?";
+        params.add(adminInfo.getPg().getStartRow()); //记录的起始数
+        params.add(adminInfo.getPg().getPageSize()); //每页查询的条数
+
+        return DBUtil.executeDQL(sql,AdminInfo.class,params.toArray());
     }
 }

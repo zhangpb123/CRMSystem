@@ -21,9 +21,9 @@ public class AdminInfo {
     //条件查询使用的
     private String start;
     private String end;
-//
-//    //这个属性就是用来分页的
-//    private PageInfo pg;
+
+    //这个属性就是用来分页的
+    private PageInfo pg;
 
     public AdminInfo() {
     }
@@ -41,14 +41,14 @@ public class AdminInfo {
         this.age = age;
     }
 
-//    public PageInfo getPg() {
-//        return pg;
-//    }
-//
-//    public void setPg(PageInfo pg) {
-//        this.pg = pg;
-//    }
-//
+    public PageInfo getPg() {
+        return pg;
+    }
+
+    public void setPg(PageInfo pg) {
+        this.pg = pg;
+    }
+
     public String getStart() {
         return start;
     }

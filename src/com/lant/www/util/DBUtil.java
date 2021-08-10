@@ -172,5 +172,29 @@ public class DBUtil {
         return null;
     }
 
+    /**
+     * 获取某个表的总记录数
+     * @param sql
+     * @return
+     */
+    public static int executeDQLGetCount(String sql){
+        int count = 0;
 
+        //如何使用jdbc
+        Connection connection = getConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return count;
+    }
 }

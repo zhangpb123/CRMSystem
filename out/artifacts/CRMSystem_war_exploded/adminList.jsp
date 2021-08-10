@@ -33,7 +33,8 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5" action="queryAdminByWhere.do" method="post">
+                    <form class="layui-form layui-col-space5" action="queryAdminByWhere.do?currentPage=1&pageSize=3" method="post">
+
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start" value="${start}">
                         </div>
@@ -52,6 +53,12 @@
                     <input id="ids" name="ids" type="hidden" lay-filter="ids">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
                     <button class="layui-btn" onclick="xadmin.open('添加用户','./addAdmin.do',600,400)"><i class="layui-icon"></i>添加</button>
+                    <select lay-filter="sizeSel" id="sizeSel" onchange="changeSize(this)">
+                        <option value="3" <c:if test="${adminInfo.pg.pageSize eq 3}">selected</c:if> >3</option>
+                        <option value="5" <c:if test="${adminInfo.pg.pageSize eq 5}">selected</c:if> >5</option>
+                        <option value="10" <c:if test="${adminInfo.pg.pageSize eq 10}">selected</c:if> >10</option>
+                        <option value="20" <c:if test="${adminInfo.pg.pageSize eq 20}">selected</c:if> >20</option>
+                    </select>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -105,12 +112,18 @@
                 <div class="layui-card-body ">
                     <div class="page">
                         <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <a class="num" href="">1</a>
-                            <span class="current">2</span>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">489</a>
-                            <a class="next" href="">&gt;&gt;</a>
+                            <a class="prev" href="queryAdminByWhere.do?currentPage=1&pageSize=${adminInfo.pg.pageSize}&username=${username}&start=${start}&end=${end}">首页</a>
+                            <a class="prev" href="queryAdminByWhere.do?currentPage=${adminInfo.pg.prevPage}&pageSize=${adminInfo.pg.pageSize}&username=${username}&start=${start}&end=${end}">&lt;&lt;</a>
+                            <c:forEach var="index" begin="1" end="${adminInfo.pg.pageCount}" >
+                                <c:if test="${adminInfo.pg.currentPage eq index}">
+                                    <span class="current">${index}</span>
+                                </c:if>
+                                <c:if test="${adminInfo.pg.currentPage != index}">
+                                    <a class="num" href="queryAdminByWhere.do?currentPage=${index}&pageSize=${adminInfo.pg.pageSize}&username=${username}&start=${start}&end=${end}">${index}</a>
+                                </c:if>
+                            </c:forEach>
+                            <a class="next" href="queryAdminByWhere.do?currentPage=${adminInfo.pg.nextPage}&pageSize=${adminInfo.pg.pageSize}&username=${username}&start=${start}&end=${end}">&gt;&gt;</a>
+                            <a class="next" href="queryAdminByWhere.do?currentPage=${adminInfo.pg.pageCount}&pageSize=${adminInfo.pg.pageSize}&username=${username}&start=${start}&end=${end}">尾页</a>
                         </div>
                     </div>
                 </div>
@@ -245,6 +258,10 @@
         }
 
 
+    }
+
+    function changeSize(obj) {
+        location.href="queryAdminByWhere.do?currentPage=1&username=${username}&start=${start}&end=${end}&pageSize="+$(obj).val();
     }
 </script>
 

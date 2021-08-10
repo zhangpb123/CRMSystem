@@ -45,4 +45,23 @@ public interface AdminDao {
      * @return
      */
     boolean delAdminByIds(String[] idArray);
+
+    /**
+     * 查询Admin的总数
+     * @return
+     */
+    int queryAdminCount();
+
+    /**
+     * 分页方式查询所有admin
+     * @param adminInfo
+     * @return
+     */
+    List<AdminInfo> queryAdmins(AdminInfo adminInfo);
+
+    /**
+     * 获取admin表中相关条件的记录数
+     * @return
+     */
+    public int queryAdminCountWithOther(AdminInfo adminInfo);
 }

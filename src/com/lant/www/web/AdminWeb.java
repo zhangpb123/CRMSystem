@@ -2,6 +2,7 @@ package com.lant.www.web;
 
 import com.lant.www.anno.GetParam;
 import com.lant.www.info.AdminInfo;
+import com.lant.www.info.PageInfo;
 import com.lant.www.service.AdminService;
 import com.lant.www.service.impl.AdminServiceImpl;
 import com.lant.www.system.SystemCode;
@@ -123,10 +124,38 @@ public class AdminWeb {
         }
     }
 
+    //管理员列表
     @GetParam("/adminlist.do")
     public String jumpAdminList(HttpServletRequest req){
         //查询所有的用户
-        List<AdminInfo> adminInfos = adminService.queryAllAdmin();
+        //List<AdminInfo> adminInfos = adminService.queryAllAdmin();
+
+        //需要做分页的操作
+        //1: 确定当前页   当前页需要展示多少条记录
+        String pageSize = req.getParameter("pageSize");
+        String currentPage = req.getParameter("currentPage");
+
+        //2: 总记录数 -> 总页数 放到业务层去做
+        AdminInfo adminInfo = new AdminInfo();
+        PageInfo pageInfo = new PageInfo();
+
+        //如果前台页面传递了当前页是第几页,需要修改page的值
+        if (!StringUtil.isNull(pageSize)){
+            pageInfo.setPageSize(Integer.valueOf(pageSize));
+        }
+
+        //当前页面的记录数
+        if (!StringUtil.isNull(currentPage)){
+            pageInfo.setCurrentPage(Integer.valueOf(currentPage));
+        }
+
+        adminInfo.setPg(pageInfo);
+
+        List<AdminInfo> adminInfos = adminService.queryAdmins(adminInfo);
+
+        //保存了我们的分页信息
+        req.setAttribute("adminInfo",adminInfo);
+        //保存了列表
         req.getSession().setAttribute("adminInfos",adminInfos);
 
         return "adminList.jsp";
@@ -228,20 +257,50 @@ public class AdminWeb {
         String end = request.getParameter("end");
         String username = request.getParameter("username");
 
-        //创建查询对象
-        AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setStart(start);
-        adminInfo.setEnd(end);
-        adminInfo.setAcount(username);
+        //需要做分页的操作
+        //1: 确定当前页   当前页需要展示多少条记录
+        String pageSize = request.getParameter("pageSize");
+        String currentPage = request.getParameter("currentPage");
 
+        //2: 总记录数 -> 总页数 放到业务层去做
+        AdminInfo adminInfo = new AdminInfo();
+        PageInfo pageInfo = new PageInfo();
+
+        //如果前台页面传递了当前页是第几页,需要修改page的值
+        if (!StringUtil.isNull(pageSize)){
+            pageInfo.setPageSize(Integer.valueOf(pageSize));
+        }
+
+        //当前页面的记录数
+        if (!StringUtil.isNull(currentPage)){
+            pageInfo.setCurrentPage(Integer.valueOf(currentPage));
+        }
+
+        adminInfo.setPg(pageInfo);
+
+        //创建查询对象
+        if (!StringUtil.isNull(start)){
+            adminInfo.setStart(start);
+        }
+        if (!StringUtil.isNull(end)){
+            adminInfo.setEnd(end);
+        }
+        if (!StringUtil.isNull(username)){
+            adminInfo.setAcount(username);
+        }
+
+
+
+        List<AdminInfo> adminInfos = adminService.queryAdmins(adminInfo);
+
+        //保存了我们的分页信息
+        request.getSession().setAttribute("adminInfo",adminInfo);
+        //保存了列表
+        request.getSession().setAttribute("adminInfos",adminInfos);
         //设置session返回前端
         request.getSession().setAttribute("username",username);
         request.getSession().setAttribute("start",start);
         request.getSession().setAttribute("end",end);
-
-        List<AdminInfo> list = adminService.queryAdminListByInfo(adminInfo);
-
-        request.getSession().setAttribute("adminInfos",list);
 
         return "adminList.jsp";
     }

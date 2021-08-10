@@ -45,4 +45,11 @@ public interface AdminService {
      * @return
      */
     boolean delAdminByIds(String[] idArray);
+
+    /**
+     * 分页查询全部
+     * @param adminInfo
+     * @return
+     */
+    List<AdminInfo> queryAdmins(AdminInfo adminInfo);
 }
