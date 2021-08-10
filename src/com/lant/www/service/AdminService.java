@@ -52,4 +52,13 @@ public interface AdminService {
      * @return
      */
     List<AdminInfo> queryAdmins(AdminInfo adminInfo);
+
+    /**
+     * 根据条件查询单个用户
+     * @param adminInfo
+     * @return
+     */
+    AdminInfo queryAdmin(AdminInfo adminInfo);
+
+    void bindRoles(int id, String[] roleIdArray);
 }

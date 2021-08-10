@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html class="x-admin-sm">
@@ -58,14 +59,14 @@
                     <span class="x-red">*</span>
                 </div>
             </div>
-<%--            <div class="layui-form-item">--%>
-<%--                <label class="layui-form-label"><span class="x-red">*</span>角色</label>--%>
-<%--                <div class="layui-input-block">--%>
-<%--                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">--%>
-<%--                    <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">--%>
-<%--                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">--%>
-<%--                </div>--%>
-<%--            </div>--%>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="x-red">*</span>角色</label>
+                <div class="layui-input-block">
+                    <c:forEach items="${roleInfos}" var="role" >
+                        <input type="checkbox" name="roles" lay-skin="primary" title="${role.rname}" value="${role.rid}">
+                    </c:forEach>
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label for="L_pass" class="layui-form-label">
                     <span class="x-red">*</span>密码
@@ -129,6 +130,16 @@
                         icon: 6
                     },
                     function() {
+
+                        var roleids = '';
+                        $(":checkbox:checked").each(function () {
+                            roleids += $(this).val() + ',';
+                        })
+
+                        console.log(roleids)
+
+                        data.field.roleids = roleids;
+
                         //发送一个ajax 请求到后台
                         $.ajax({
                             url:"addAd.do",

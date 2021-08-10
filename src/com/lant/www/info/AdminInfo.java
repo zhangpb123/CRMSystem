@@ -15,9 +15,9 @@ public class AdminInfo {
     private int astatus;
     private String adesc;
 
-//    //角色信息展示;一个用户有多个角色
-//    private List<RoleInfo> roles;
-//
+    //角色信息展示;一个用户有多个角色
+    private List<RoleInfo> roles;
+
     //条件查询使用的
     private String start;
     private String end;
@@ -137,13 +137,13 @@ public class AdminInfo {
         this.adesc = adesc;
     }
 
-//    public List<RoleInfo> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(List<RoleInfo> roles) {
-//        this.roles = roles;
-//    }
+    public List<RoleInfo> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleInfo> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {

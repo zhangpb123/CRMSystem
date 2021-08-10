@@ -1,16 +1,21 @@
 package com.lant.www.service.impl;
 
 import com.lant.www.dao.AdminDao;
+import com.lant.www.dao.RoleDao;
 import com.lant.www.dao.impl.AdminDaoImpl;
+import com.lant.www.dao.impl.RoleDaoImpl;
 import com.lant.www.info.AdminInfo;
 import com.lant.www.info.PageInfo;
+import com.lant.www.info.RoleInfo;
 import com.lant.www.service.AdminService;
+import com.lant.www.service.RoleService;
 
 import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
 
     AdminDao adminDao = new AdminDaoImpl();
+    RoleDao roleDao = new RoleDaoImpl();
 
     /**
      * login查询单个用户-利用根据acount查询
@@ -84,7 +89,26 @@ public class AdminServiceImpl implements AdminService {
 
         List<AdminInfo> adminInfos = adminDao.queryAdmins(adminInfo);
 
+        for (AdminInfo a : adminInfos) {
+            //根据用户id查询roles
+            List<RoleInfo> roles = roleDao.queryRoleNameByAdminId(a.getId());
+            //设置roles
+            a.setRoles(roles);
+        }
+
         return adminInfos;
+    }
+
+    @Override
+    public AdminInfo queryAdmin(AdminInfo adminInfo) {
+        return adminDao.queryAdmin(adminInfo);
+    }
+
+    @Override
+    public void bindRoles(int id, String[] roleIdArray) {
+        for (String role : roleIdArray) {
+            roleDao.bindRoles(id,Integer.valueOf(role));
+        }
     }
 
 

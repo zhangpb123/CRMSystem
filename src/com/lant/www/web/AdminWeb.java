@@ -3,8 +3,11 @@ package com.lant.www.web;
 import com.lant.www.anno.GetParam;
 import com.lant.www.info.AdminInfo;
 import com.lant.www.info.PageInfo;
+import com.lant.www.info.RoleInfo;
 import com.lant.www.service.AdminService;
+import com.lant.www.service.RoleService;
 import com.lant.www.service.impl.AdminServiceImpl;
+import com.lant.www.service.impl.RoleServiceImpl;
 import com.lant.www.system.SystemCode;
 import com.lant.www.util.StringUtil;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class AdminWeb {
 
     AdminService adminService = new AdminServiceImpl();
+    RoleService roleService = new RoleServiceImpl();
 
     @GetParam(value = "/login.do")
     public String login(HttpServletRequest req){
@@ -78,6 +82,9 @@ public class AdminWeb {
 
     @GetParam("/addAdmin.do")
     public String jumpAdd(HttpServletRequest req){
+        List<RoleInfo> roleInfos = roleService.queryAllRole();
+        req.setAttribute("roleInfos",roleInfos);
+
         return "/WEB-INF/adminAdd.jsp";
     }
 
@@ -88,6 +95,7 @@ public class AdminWeb {
         String age = req.getParameter("age");
         String pass = req.getParameter("pass");
         String repass = req.getParameter("repass");
+        String roleids = req.getParameter("roleids");
 
         //1.1 非空校验
         if(StringUtil.isNull(username)){
@@ -116,6 +124,18 @@ public class AdminWeb {
         AdminInfo adminInfo = new AdminInfo(username,md5Pass,phone,Integer.valueOf(age));
 
         boolean b = adminService.insertAdmin(adminInfo);
+
+        if (!StringUtil.isNull(roleids)){
+            //给用户绑定角色
+            //1:得到用户id
+            int id = adminService.queryAdmin(adminInfo).getId();
+
+            //2:得到角色id
+            String[] roleIdArray = roleids.split(",");
+
+            //3:绑定 ; 就是往第三方表插入记录
+            adminService.bindRoles(id,roleIdArray);
+        }
 
         if (b){
             return "index.jsp";

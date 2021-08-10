@@ -88,7 +88,11 @@
                                 <td>${admin.phone}</td>
                                 <td>*********</td>
                                 <td>${admin.age}</td>
-                                <td>超级管理员</td>
+                                <td>
+                                    <c:forEach items="${admin.roles}" var="role">
+                                        ${role.rname}/
+                                    </c:forEach>
+                                </td>
                                 <td>${admin.createtime}</td>
                                 <td class="td-status">
                                     <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>

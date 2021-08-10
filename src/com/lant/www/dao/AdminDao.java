@@ -64,4 +64,7 @@ public interface AdminDao {
      * @return
      */
     public int queryAdminCountWithOther(AdminInfo adminInfo);
+
+
+
 }

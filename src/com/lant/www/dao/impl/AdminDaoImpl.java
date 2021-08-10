@@ -147,6 +147,7 @@ public class AdminDaoImpl implements AdminDao {
         return DBUtil.executeDQLGetCount(sql);
     }
 
+
     /**
      * 利用分页方式去查询所有admin
      * @param adminInfo
